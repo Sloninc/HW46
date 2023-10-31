@@ -14,4 +14,9 @@
     <None Remove="README.md" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.15" />
+    <PackageReference Include="Npgsql" Version="7.0.6" />
+  </ItemGroup>
+
 </Project>
