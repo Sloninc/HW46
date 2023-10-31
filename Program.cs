@@ -139,11 +139,11 @@ namespace HW46
 
         private static IEnumerable<PplOverThirtyBuyProdOne> GetPplOverThirtyBuyProdOne()
         {
-            using var connection = new NpgsqlConnection(ConnectionString);
+            using var connection = new NpgsqlConnection(ConnectionString2);
             connection.Open();
 
             const string sql = @"
-                SELECT c.ID AS CustomerID, c.FirstName, c.LastName, o.ProductID, o.Quantity AS ProductQuantity, p.Price AS ProductPrice
+                SELECT c.ID AS CustomerID, c.FirstName, c.LastName, o.ProductID, o.Quantity, p.Price
                 FROM Customers c
                 JOIN Orders o ON c.ID = o.CustomerID
                 JOIN Products p ON o.ProductID = p.ID
@@ -154,7 +154,7 @@ namespace HW46
 
         private static void InsertCustomers(IEnumerable<Customer> newCustomers)
         {
-            using var connection = new NpgsqlConnection(ConnectionString);
+            using var connection = new NpgsqlConnection(ConnectionString2);
             const string commandText = @"insert into Customers (FirstName, LastName, Age) values (@FirstName, @LastName, @Age);";
             foreach (var customer in newCustomers)
             {
@@ -163,7 +163,7 @@ namespace HW46
         }
         private static void InsertProducts(IEnumerable<Product> newProducts)
         {
-            using var connection = new NpgsqlConnection(ConnectionString);
+            using var connection = new NpgsqlConnection(ConnectionString2);
             const string commandText = @"insert into Products (Name, Description, StockQuantity, Price) values (@Name, @Description, @StockQuantity, @Price);";
             foreach (var product in newProducts)
             {
@@ -172,7 +172,7 @@ namespace HW46
         }
         private static void InsertOrders(IEnumerable<Order> newOrders)
         {
-            using var connection = new NpgsqlConnection(ConnectionString);
+            using var connection = new NpgsqlConnection(ConnectionString2);
             const string commandText = @"insert into Orders (CustomerId, ProductId, Quantity) values (@CustomerId, @ProductId, @Quantity);";
             foreach (var order in newOrders)
             {
@@ -198,7 +198,7 @@ namespace HW46
         {
             if (!int.TryParse(customerid, out var id))
             {
-                throw new ArgumentException("Не число", nameof(customerid));
+                throw new ArgumentException("вы ввели не целочисленное значение", nameof(customerid));
             }
             using var connection = new NpgsqlConnection(ConnectionString);
             const string commandText = @$"select id, firstname, lastname, age from customers where id = @id;";
